@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards, UsePipes } from '@nestjs/common';
+import { ValidationPipe } from '../shared/validation.pipe';
 import { AuthGuard } from '../shared/auth.guard';
 import { User } from '../user/user.decorator';
 import { PostDTO } from './post.dto';
@@ -11,6 +12,7 @@ export class PostController {
 
     @Post()
     @UseGuards(new AuthGuard())
+    @UsePipes(new ValidationPipe())
     async create(@User('id') user: string, @Body() postDTO: PostDTO){
         return await this.postService.createPost(user, postDTO);
     }
@@ -32,6 +34,7 @@ export class PostController {
 
     @Put("update/:id")
     @UseGuards(new AuthGuard())
+    @UsePipes(new ValidationPipe())
     async updatePost(@Param("id") postId: string, @User('id') userId: string, @Body() data: Partial<PostDTO>){
         return await this.postService.update(postId, userId, data);
     }
