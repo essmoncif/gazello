@@ -1,7 +1,9 @@
-import { BeforeInsert, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 import 'dotenv/config';
+import { PostEntity } from '../post/post.entity';
+
 
 
 @Entity({name : "user"})
@@ -26,6 +28,9 @@ export class UserEntity {
         type: "text",
     })
     email: string;
+
+    @OneToMany(()=> PostEntity, post => post.author)
+    posts: PostEntity[];
 
     @BeforeInsert()
     async hashPassword(){
