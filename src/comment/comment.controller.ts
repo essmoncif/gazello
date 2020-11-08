@@ -48,7 +48,7 @@ export class CommentController {
         type: String
     })
     @ApiOkResponse({description: 'The comment has been successfully found'})
-    @ApiNotFoundResponse({description: 'comment not found!'})
+    @ApiNotFoundResponse({description: 'Comment not found!'})
     async showOne(@Param('id') id: string){
         return await this.commentService.findOneComment(id);
     }
