@@ -12,7 +12,7 @@ export class UserController {
 
     @Post("auth/register")
     @UsePipes(new ValidationPipe())
-    @ApiCreatedResponse({ description: 'The user has been successfully created.'})
+    @ApiCreatedResponse({ description: 'The user has been successfully create.'})
     @ApiResponse({ status: 400, description: 'This username is already exist !'})
     async register(@Body() userRegisterDTO: UserRegisterDTO){
         return await this.userService.register(userRegisterDTO);
