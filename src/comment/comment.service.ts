@@ -26,7 +26,7 @@ export class CommentService {
             relations: ['author', 'post']
         });
         if(!comment)
-            throw new HttpException(`comment id: ${commentId} not found !`, HttpStatus.NOT_FOUND);
+            throw new HttpException(`comment id:${commentId} not found !`, HttpStatus.NOT_FOUND);
         return comment;
     }
 
