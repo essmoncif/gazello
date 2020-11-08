@@ -81,7 +81,7 @@ export class PostController {
         type: String
     })
     @ApiBearerAuth()
-    @ApiOkResponse({description: "The post has been successfully deleted."})
+    @ApiOkResponse({description: "The post has been successfully delete."})
     @ApiUnauthorizedResponse({description: "Unauthorized access to delete!"})
     async detelePost(@User('id') userId: string, @Param('id') postId: string ){
         return await this.postService.detele(postId, userId);
