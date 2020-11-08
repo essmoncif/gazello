@@ -11,6 +11,7 @@ async function bootstrap() {
     .setTitle('Gazello application')
     .setDescription('The Gazello API description')
     .setVersion('1.0')
+    .addBearerAuth()
     .addTag('Gazello')
     .build();
   const document = SwaggerModule.createDocument(app, options);
