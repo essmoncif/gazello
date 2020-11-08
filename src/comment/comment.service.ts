@@ -37,6 +37,8 @@ export class CommentService {
             take: 25,
             skip: 25*(page  - 1)
         });
+        if(!comments)
+            throw new HttpException('This post not found!', HttpStatus.NOT_FOUND);
         return comments;
     }
 
@@ -47,6 +49,8 @@ export class CommentService {
             take: 25,
             skip: 25*(page  - 1)
         });
+        if(!comments)
+            throw new HttpException('This user not found!', HttpStatus.NOT_FOUND);
         return comments;
     }
 
@@ -54,6 +58,8 @@ export class CommentService {
         const post = await this.postRepository.findOne({
             where: {id: postId}
         })
+        if(!post)
+            throw new HttpException('Post not found!', HttpStatus.NOT_FOUND);
         
         const user = await this.userRepository.findOne({
             where: {id: userId}
