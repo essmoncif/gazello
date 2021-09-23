@@ -1,4 +1,4 @@
-version: '3'
+version: '3.7'
 
 services:
   db:
@@ -12,6 +12,31 @@ services:
       POSTGRES_DB: ${DATABASE_DB}
     volumes:
       - ./pgdata:/var/lib/postgresql/data
+    networks:
+      - backend
+  
+  gazello:
+    container_name: gazello
+    build:
+      context: .
+      target: development
+    
+    env_file:
+      - .env
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 4000:4000
+    command: npm run start:dev
 
+    depends_on:
+      - db
+    
+    networks:
+      - backend
+
+networks:
+  backend:
 volumes:
   pgdata:
