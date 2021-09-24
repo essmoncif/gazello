@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  db:
+  postgres:
     container_name: postgres
     image: postgres:12
     ports:
@@ -10,17 +10,17 @@ services:
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       POSTGRES_DB: ${DATABASE_DB}
+      PG_DATA: /var/lib/postgresql/data
     volumes:
-      - ./pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
     networks:
       - backend
-  
   gazello:
     container_name: gazello
-    build:
-      context: .
-      target: development
-    
+    image: gazello
+    # build:
+    #   context: .
+    #   target: development
     env_file:
       - .env
     volumes:
@@ -28,14 +28,11 @@ services:
       - /usr/src/app/node_modules
     ports:
       - 4000:4000
-    command: npm run start:dev
-
+    command: bash -c "npm install --save source-map-support && npm run start:dev"
     depends_on:
-      - db
-    
+      - postgres
     networks:
       - backend
-
 networks:
   backend:
 volumes:

@@ -1,8 +1,12 @@
+require('source-map-support').install();
+
 import 'dotenv/config';
-import { NestFactory } from '@nestjs/core';
+
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
 import { AppModule } from './app.module';
 import { Logger } from '@nestjs/common';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { NestFactory } from '@nestjs/core';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -18,6 +22,9 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   await app.listen(process.env.APP_PORT || 4000);
-  Logger.log(`Server running on http://localhost:${process.env.APP_PORT}`, 'Bootstrap');
+  Logger.log(
+    `Server running on http://localhost:${process.env.APP_PORT}`,
+    'Bootstrap',
+  );
 }
 bootstrap();
